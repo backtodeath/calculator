@@ -6,7 +6,62 @@
         </platform>
     </platforms>
     <package>
-        <blacklist/>
+        <blacklist>
+            <path value=".git" type="dir"/>
+            <path value=".git/COMMIT_EDITMSG" type="file"/>
+            <path value=".git/FETCH_HEAD" type="file"/>
+            <path value=".git/HEAD" type="file"/>
+            <path value=".git/branches" type="dir"/>
+            <path value=".git/config" type="file"/>
+            <path value=".git/hooks" type="dir"/>
+            <path value=".git/index" type="file"/>
+            <path value=".git/logs" type="dir"/>
+            <path value=".git/logs/HEAD" type="file"/>
+            <path value=".git/logs/refs" type="dir"/>
+            <path value=".git/logs/refs/heads" type="dir"/>
+            <path value=".git/logs/refs/heads/master" type="file"/>
+            <path value=".git/logs/refs/remotes" type="dir"/>
+            <path value=".git/logs/refs/remotes/origin" type="dir"/>
+            <path value=".git/logs/refs/remotes/origin/master" type="file"/>
+            <path value=".git/objects" type="dir"/>
+            <path value=".git/objects/12" type="dir"/>
+            <path value=".git/objects/12/64ec4ed333376c3487b1743a6102c48ab73fff" type="file"/>
+            <path value=".git/objects/35" type="dir"/>
+            <path value=".git/objects/35/d2987c4e473b39c6100b3e3246a50622305db6" type="file"/>
+            <path value=".git/objects/61" type="dir"/>
+            <path value=".git/objects/61/82268a4189a7585ac88fdf25b307e85b239026" type="file"/>
+            <path value=".git/objects/71" type="dir"/>
+            <path value=".git/objects/71/f83c2059f1c9a696c56d3a8370b25288dfffc0" type="file"/>
+            <path value=".git/objects/85" type="dir"/>
+            <path value=".git/objects/85/83e964c31a44c97b78300be4f67502dee5f956" type="file"/>
+            <path value=".git/objects/a0" type="dir"/>
+            <path value=".git/objects/a0/661118da36427471f51b1d89aec1e289ba9a53" type="file"/>
+            <path value=".git/objects/a1" type="dir"/>
+            <path value=".git/objects/a1/1af647bcbad3e0c98aa985320f08fa128bffbb" type="file"/>
+            <path value=".git/objects/b4" type="dir"/>
+            <path value=".git/objects/b4/8b5ad567f821f89dd2c3e2aa794ef26810afe4" type="file"/>
+            <path value=".git/objects/c5" type="dir"/>
+            <path value=".git/objects/c5/e45329ecf70a931e73ab813de2022f58dc44ab" type="file"/>
+            <path value=".git/objects/c9" type="dir"/>
+            <path value=".git/objects/c9/66bae147d98e9cf1e544aab72c3542e25a54a1" type="file"/>
+            <path value=".git/objects/c9/67c4fc0c0c1192b1b67946dbd1fd8c764ae844" type="file"/>
+            <path value=".git/objects/c9/b42051a6915cba6966cc3e77440f13ac9fa6ac" type="file"/>
+            <path value=".git/objects/d5" type="dir"/>
+            <path value=".git/objects/d5/79dac835f72a110ead367c89de5bc4e2c466b9" type="file"/>
+            <path value=".git/objects/e1" type="dir"/>
+            <path value=".git/objects/e1/b03dd491f21d2c88830a561305c52767a5d6ec" type="file"/>
+            <path value=".git/objects/info" type="dir"/>
+            <path value=".git/objects/pack" type="dir"/>
+            <path value=".git/objects/pack/pack-715ed1c947fc3cdf6962a01eb21a01ed3166f3fd.idx" type="file"/>
+            <path value=".git/objects/pack/pack-715ed1c947fc3cdf6962a01eb21a01ed3166f3fd.pack" type="file"/>
+            <path value=".git/refs" type="dir"/>
+            <path value=".git/refs/heads" type="dir"/>
+            <path value=".git/refs/heads/master" type="file"/>
+            <path value=".git/refs/remotes" type="dir"/>
+            <path value=".git/refs/remotes/origin" type="dir"/>
+            <path value=".git/refs/remotes/origin/master" type="file"/>
+            <path value=".git/refs/tags" type="dir"/>
+        </blacklist>
         <resFallback autoGen="true"/>
     </package>
 </tproject>

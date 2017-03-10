@@ -4,7 +4,7 @@
 <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></SignatureMethod>
 <Reference URI="calc-icon.png">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
-<DigestValue>cpOiQ4kFP3CrO2uNh0/o6eX90mg0PP6zfe4Finw2UyY=</DigestValue>
+<DigestValue>61/iilklnUMwnVa1eVSZpKAP/TkqxCz/vU9ptOhN4oo=</DigestValue>
 </Reference>
 <Reference URI="config.xml">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
@@ -43,9 +43,9 @@
 </Reference>
 </SignedInfo>
 <SignatureValue>
-JEGMgAOe5TP/OKbF1FcGoQO2/AVYlqs+ItsvZxdEuZ+nNMwUh3f9n6XpU1TjpeAH+DGhW8xugITn
-3cQMpLvEgg6fnK/cLrXt9ByGVKEY4DrMv2DvBLs6oXG8CmP09s/wLe6DvsGlcqRql76Un9HuNkjK
-4Z5sg4AA7zEObTYb7Ik=
+MsJIzVbBkrYTJ9eWPmUf69kodC00kNdcOi9wDHpzAwhhNENUflFE7SW6DF7XYas5+jbcdVLff92u
+rq/C3fiQch0EFhXaemn/AvYIRZ4I5Y2t1lrZEUXWrX/JSDat1CSFV07eVCVONfTkq0ElML1cw8Wa
+LjvhU+r+SJCWuttnsRo=
 </SignatureValue>
 <KeyInfo>
 <X509Data>
