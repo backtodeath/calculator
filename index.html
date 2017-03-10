@@ -6,20 +6,183 @@
 <meta name="apple-mobile-web-app-capable" content="no" />
 <title>Lazors</title>
 
-<link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/app.js"></script>
 
 </head>
-<body onload="init()" onorientationchange="orentationChanged()">
-	<h1 id="test">Lazors</h1>
-	<a id="menuBtn" href="javascript: showMenu();">Menu</a>
-	<div id="menu"></div>
-	<button onclick="goApps()" class="more-apps btn btn-default">More
-		Cool Applications</button>
+<body>
+	<table class="calc-table">
+		<tr>
+			<td colspan="5" id="sciout">
+				<div>
+					<div id="sciOutPut">0</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button class="btn black-button" onclick="r('sin')">sin</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('cos')">cos</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('tan')">tan</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('RND')">RND</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('+/-')">&#177;</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button class="btn black-button" onclick="r('asin')">sin<sup>-1</sup></button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('acos')">cos<sup>-1</sup></button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('atan')">tan<sup>-1</sup></button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('pi')">&#960;</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('e')">e</button>
+			</td>
+		</tr>
+		<tr >
+			<td>
+				<button class="btn black-button" onclick="r('pow')">x<sup>y</sup></button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('x3')">x<sup>3</sup></button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('x2')">x<sup>2</sup></button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('ex')">e<sup>x</sup></button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('10x')">0<sup>x</sup></button>
+			</td>
+		</tr>
+		<tr >
+			<td>
+				<button class="btn black-button" onclick="r('apow')"><sup>y</sup>&#8730;x</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('3x')"><sup>3</sup>&#8730;x</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('sqrt')">&#8730;x</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('log')">log</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('ln')">ln</button>
+			</td>
+		</tr>
+		<tr >
+		
+			<td>
+				<button class="btn black-button" onclick="r('1/x')">1/x</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('pc')">%</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('n!')">n!</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('EXP')">EXP</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('MC')">MC</button>
+			</td>
+		</tr>
+		<tr >
+			<td>
+				<button class="btn btn-info" onclick="r(7)">7</button>
+			</td>
+			<td>
+				<button class="btn btn-info" onclick="r(8)">8</button>
+			</td>
+			<td>
+				<button class="btn btn-info" onclick="r(9)">9</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('+')">+</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('MS')">MS</button>
+			</td>
+		</tr>
+		<tr >
+			<td>
+				<button class="btn btn-info" onclick="r(4)">4</button>
+			</td>
+			<td>
+				<button class="btn btn-info" onclick="r(5)">5</button>
+			</td>
+			<td>
+				<button class="btn btn-info" onclick="r(6)">6</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('-')">-</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('M+')">M+</button>
+			</td>
+		</tr>
+		<tr >
+			<td>
+				<button class="btn btn-info" onclick="r(1)">1</button>
+			</td>
+			<td>
+				<button class="btn btn-info" onclick="r(2)">2</button>
+			</td>
+			<td>
+				<button class="btn btn-info" onclick="r(3)">3</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('*')">*</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('M-')">M-</button>
+			</td>
+		</tr>
+		<tr >
+			<td colspan="2">
+				<button class="btn btn-info" onclick="r(0)">0</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('.')">.</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('/')">/</button>
+			</td>
+			<td>
+				<button class="btn black-button" onclick="r('MR')">MR</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<button class="btn orange-button" onclick="r('C')">C</button>
+			</td>
+			<td colspan="3">
+				<button class="btn orange-button" onclick="r('=')">=</button>
+			</td>
+		</tr>
+	</table>
 
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog" id="modal-window">
@@ -30,7 +193,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-info" style="float: left"
-						data-dismiss="modal" onclick="goqApps()">More Apps</button>
+						data-dismiss="modal" onclick="goApps()">More Apps</button>
 					<button type="button" class="btn btn-default" style="width: 30%"
 						data-dismiss="modal">Cancel</button>
 					<button type="button" class="btn btn-primary" style="width: 30%"

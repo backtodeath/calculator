@@ -1,580 +1,10 @@
-window.scrollTo(0, 1);
-var gameW = window.innerWidth - 20;
-var gameH = window.innerHeight - 5;
-var menu;
-var menuItems;
-var canvas;
-var context;
-var cursorX;
-var cursorY;
-
-var levels = [
-		[ [ [ 94, 96 ], [ 263, 122 ], [ 40, 330 ], [ 273, 343 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ] ],
-		[
-				[ [ 173, 86 ], [ 240, 305 ], [ 63, 223 ], [ 254, 111 ],
-						[ 143, 314 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 0, 4 ], [ 1, 3 ], [ 2, 3 ],
-						[ 3, 4 ] ] ],
-		[
-				[ [ 168, 60 ], [ 173, 316 ], [ 233, 266 ], [ 215, 143 ],
-						[ 105, 317 ], [ 58, 137 ] ],
-				[ [ 0, 3 ], [ 0, 4 ], [ 1, 3 ], [ 1, 5 ], [ 2, 3 ], [ 2, 4 ],
-						[ 2, 5 ] ] ],
-		[
-				[ [ 127, 71 ], [ 213, 155 ], [ 152, 317 ], [ 224, 237 ],
-						[ 70, 272 ], [ 65, 193 ] ],
-				[ [ 0, 2 ], [ 0, 5 ], [ 1, 4 ], [ 1, 5 ], [ 3, 4 ], [ 3, 5 ] ] ],
-		[
-				[ [ 247, 296 ], [ 95, 278 ], [ 163, 71 ], [ 58, 148 ],
-						[ 278, 151 ], [ 171, 332 ] ],
-				[ [ 0, 2 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ],
-						[ 2, 5 ], [ 3, 4 ], [ 4, 5 ] ] ],
-		[
-				[ [ 38, 300 ], [ 123, 361 ], [ 173, 53 ], [ 258, 321 ],
-						[ 284, 151 ], [ 72, 111 ] ],
-				[ [ 0, 2 ], [ 0, 4 ], [ 0, 5 ], [ 1, 2 ], [ 1, 4 ], [ 1, 5 ],
-						[ 2, 4 ], [ 3, 5 ] ] ],
-		[
-				[ [ 46, 125 ], [ 207, 370 ], [ 145, 201 ], [ 255, 213 ],
-						[ 238, 161 ], [ 78, 329 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 4 ], [ 0, 5 ], [ 1, 3 ], [ 1, 5 ],
-						[ 2, 3 ], [ 4, 5 ] ] ],
-		[
-				[ [ 45, 140 ], [ 130, 363 ], [ 41, 309 ], [ 174, 92 ],
-						[ 250, 132 ], [ 285, 315 ] ],
-				[ [ 0, 2 ], [ 0, 4 ], [ 0, 5 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ],
-						[ 2, 3 ], [ 2, 5 ], [ 4, 5 ] ] ],
-		[
-				[ [ 139, 335 ], [ 284, 193 ], [ 80, 273 ], [ 210, 80 ],
-						[ 93, 134 ], [ 283, 314 ] ],
-				[ [ 0, 1 ], [ 0, 3 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ],
-						[ 3, 4 ], [ 3, 5 ], [ 4, 5 ] ] ],
-		[
-				[ [ 258, 329 ], [ 202, 73 ], [ 67, 293 ], [ 273, 136 ],
-						[ 173, 360 ], [ 60, 107 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 1, 2 ], [ 1, 4 ], [ 1, 5 ],
-						[ 2, 3 ], [ 2, 4 ], [ 2, 5 ], [ 3, 5 ], [ 4, 5 ] ] ],
-		[
-				[ [ 48, 341 ], [ 240, 136 ], [ 203, 345 ], [ 273, 290 ],
-						[ 123, 96 ], [ 29, 138 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 0, 4 ], [ 0, 5 ], [ 1, 2 ],
-						[ 1, 5 ], [ 2, 3 ], [ 2, 4 ], [ 2, 5 ], [ 3, 4 ] ] ],
-		[
-				[ [ 149, 212 ], [ 77, 232 ], [ 121, 138 ], [ 225, 220 ],
-						[ 266, 100 ], [ 210, 337 ], [ 142, 329 ], [ 274, 319 ] ],
-				[ [ 0, 1 ], [ 0, 6 ], [ 1, 3 ], [ 1, 4 ], [ 1, 6 ], [ 1, 7 ],
-						[ 2, 3 ], [ 3, 4 ], [ 3, 5 ], [ 3, 6 ] ] ],
-		[
-				[ [ 264, 246 ], [ 77, 97 ], [ 65, 304 ], [ 175, 344 ],
-						[ 202, 137 ], [ 263, 117 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 0, 4 ], [ 1, 2 ], [ 1, 3 ],
-						[ 1, 5 ], [ 3, 5 ], [ 4, 5 ] ] ],
-		[
-				[ [ 103, 335 ], [ 184, 336 ], [ 239, 253 ], [ 35, 262 ],
-						[ 187, 141 ], [ 69, 157 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 5 ], [ 1, 4 ], [ 1, 5 ], [ 2, 3 ],
-						[ 2, 4 ], [ 2, 5 ], [ 3, 4 ], [ 4, 5 ] ] ],
-		[
-				[ [ 71, 109 ], [ 266, 286 ], [ 66, 217 ], [ 117, 313 ],
-						[ 206, 346 ], [ 246, 88 ], [ 274, 192 ], [ 180, 180 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 4 ], [ 0, 6 ], [ 0, 7 ], [ 1, 3 ],
-						[ 2, 3 ], [ 2, 4 ], [ 2, 5 ], [ 2, 6 ], [ 2, 7 ],
-						[ 3, 5 ], [ 3, 6 ], [ 5, 7 ] ] ],
-		[
-				[ [ 154, 255 ], [ 186, 191 ], [ 85, 279 ], [ 49, 167 ],
-						[ 198, 93 ], [ 264, 178 ], [ 108, 111 ], [ 251, 298 ] ],
-				[ [ 0, 5 ], [ 0, 6 ], [ 1, 2 ], [ 1, 4 ], [ 1, 7 ], [ 2, 3 ],
-						[ 2, 4 ], [ 2, 6 ], [ 2, 7 ], [ 3, 6 ], [ 3, 7 ],
-						[ 4, 6 ], [ 4, 7 ], [ 5, 6 ] ] ],
-		[
-				[ [ 218, 291 ], [ 250, 221 ], [ 151, 358 ], [ 48, 344 ],
-						[ 76, 232 ], [ 47, 80 ], [ 270, 129 ], [ 175, 119 ] ],
-				[ [ 0, 3 ], [ 0, 7 ], [ 1, 5 ], [ 1, 7 ], [ 2, 7 ], [ 3, 5 ],
-						[ 3, 6 ], [ 3, 7 ], [ 4, 5 ], [ 4, 6 ], [ 5, 7 ] ] ],
-		[
-				[ [ 33, 204 ], [ 252, 91 ], [ 250, 191 ], [ 71, 353 ],
-						[ 227, 246 ], [ 54, 272 ], [ 67, 142 ], [ 193, 316 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ], [ 1, 3 ], [ 1, 5 ], [ 1, 6 ],
-						[ 2, 6 ], [ 3, 4 ], [ 3, 5 ], [ 4, 6 ], [ 5, 6 ],
-						[ 5, 7 ], [ 6, 7 ] ] ],
-		[
-				[ [ 143, 338 ], [ 146, 75 ], [ 98, 189 ], [ 285, 195 ],
-						[ 257, 303 ], [ 278, 100 ], [ 66, 268 ], [ 44, 129 ] ],
-				[ [ 0, 2 ], [ 0, 3 ], [ 0, 6 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ],
-						[ 2, 7 ], [ 3, 4 ], [ 3, 6 ], [ 5, 6 ], [ 5, 7 ] ] ],
-		[
-				[ [ 101, 70 ], [ 273, 225 ], [ 52, 159 ], [ 133, 339 ],
-						[ 245, 334 ], [ 38, 279 ], [ 191, 248 ], [ 190, 79 ] ],
-				[ [ 0, 1 ], [ 0, 3 ], [ 0, 6 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ],
-						[ 1, 7 ], [ 2, 3 ], [ 2, 4 ], [ 3, 5 ], [ 3, 7 ],
-						[ 5, 7 ], [ 6, 7 ] ] ],
-		[
-				[ [ 169, 226 ], [ 74, 154 ], [ 51, 306 ], [ 213, 325 ],
-						[ 267, 174 ], [ 39, 212 ], [ 192, 192 ], [ 121, 377 ],
-						[ 131, 90 ], [ 247, 238 ] ],
-				[ [ 0, 2 ], [ 1, 2 ], [ 1, 6 ], [ 2, 3 ], [ 2, 9 ], [ 3, 5 ],
-						[ 4, 6 ], [ 4, 7 ], [ 5, 9 ], [ 6, 9 ], [ 7, 8 ] ] ],
-		[
-				[ [ 55, 149 ], [ 189, 316 ], [ 239, 188 ], [ 300, 213 ],
-						[ 276, 285 ], [ 217, 58 ], [ 114, 294 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 6 ], [ 1, 2 ], [ 1, 3 ], [ 1, 5 ],
-						[ 2, 5 ], [ 2, 6 ], [ 3, 4 ], [ 3, 5 ], [ 4, 6 ],
-						[ 5, 6 ] ] ],
-		[
-				[ [ 262, 193 ], [ 84, 113 ], [ 194, 82 ], [ 77, 280 ],
-						[ 230, 288 ], [ 40, 183 ], [ 158, 346 ], [ 163, 218 ] ],
-				[ [ 0, 5 ], [ 0, 6 ], [ 0, 7 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ],
-						[ 1, 6 ], [ 1, 7 ], [ 2, 3 ], [ 2, 4 ], [ 2, 6 ],
-						[ 3, 4 ], [ 3, 6 ], [ 3, 7 ], [ 5, 6 ], [ 5, 7 ] ] ],
-		[
-				[ [ 287, 190 ], [ 131, 201 ], [ 255, 289 ], [ 60, 194 ],
-						[ 163, 74 ], [ 246, 87 ], [ 66, 281 ], [ 184, 312 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 4 ], [ 0, 7 ], [ 1, 4 ], [ 2, 3 ],
-						[ 2, 5 ], [ 2, 7 ], [ 3, 4 ], [ 3, 7 ], [ 4, 5 ],
-						[ 4, 6 ], [ 4, 7 ], [ 6, 7 ] ] ],
-		[
-				[ [ 228, 100 ], [ 259, 147 ], [ 276, 307 ], [ 173, 321 ],
-						[ 61, 161 ], [ 55, 237 ], [ 126, 81 ], [ 118, 134 ] ],
-				[ [ 0, 2 ], [ 0, 5 ], [ 0, 6 ], [ 1, 5 ], [ 1, 6 ], [ 2, 4 ],
-						[ 2, 5 ], [ 2, 6 ], [ 2, 7 ], [ 3, 5 ], [ 3, 7 ],
-						[ 4, 6 ], [ 4, 7 ] ] ],
-		[
-				[ [ 104, 334 ], [ 266, 263 ], [ 262, 132 ], [ 92, 102 ],
-						[ 170, 287 ], [ 225, 336 ], [ 158, 52 ], [ 55, 214 ] ],
-				[ [ 0, 3 ], [ 0, 5 ], [ 0, 6 ], [ 0, 7 ], [ 1, 2 ], [ 1, 5 ],
-						[ 1, 6 ], [ 1, 7 ], [ 2, 3 ], [ 2, 4 ], [ 3, 4 ],
-						[ 4, 7 ], [ 5, 6 ] ] ],
-		[
-				[ [ 291, 165 ], [ 158, 341 ], [ 53, 219 ], [ 159, 216 ],
-						[ 220, 48 ], [ 80, 124 ], [ 188, 121 ], [ 272, 325 ] ],
-				[ [ 0, 1 ], [ 0, 5 ], [ 1, 5 ], [ 1, 7 ], [ 2, 3 ], [ 2, 6 ],
-						[ 2, 7 ], [ 3, 6 ], [ 3, 7 ], [ 4, 5 ], [ 4, 6 ],
-						[ 4, 7 ], [ 5, 6 ], [ 6, 7 ] ] ],
-		[
-				[ [ 203, 287 ], [ 258, 151 ], [ 65, 305 ], [ 256, 262 ],
-						[ 90, 91 ], [ 178, 86 ], [ 38, 214 ], [ 129, 316 ] ],
-				[ [ 0, 1 ], [ 0, 6 ], [ 0, 7 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ],
-						[ 1, 5 ], [ 1, 6 ], [ 1, 7 ], [ 2, 4 ], [ 2, 5 ],
-						[ 3, 4 ], [ 4, 6 ], [ 6, 7 ] ] ],
-		[
-				[ [ 209, 182 ], [ 151, 299 ], [ 176, 56 ], [ 50, 169 ],
-						[ 98, 106 ], [ 109, 168 ], [ 284, 290 ], [ 279, 116 ] ],
-				[ [ 0, 2 ], [ 0, 7 ], [ 1, 3 ], [ 1, 5 ], [ 1, 6 ], [ 2, 4 ],
-						[ 2, 5 ], [ 2, 6 ], [ 3, 5 ], [ 3, 6 ], [ 4, 5 ],
-						[ 4, 6 ], [ 5, 6 ], [ 5, 7 ], [ 6, 7 ] ] ],
-		[
-				[ [ 136, 186 ], [ 243, 111 ], [ 55, 302 ], [ 62, 106 ],
-						[ 188, 317 ], [ 132, 89 ], [ 234, 218 ], [ 28, 189 ] ],
-				[ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 0, 4 ], [ 1, 2 ], [ 1, 3 ],
-						[ 1, 5 ], [ 1, 6 ], [ 1, 7 ], [ 2, 5 ], [ 2, 6 ],
-						[ 3, 4 ], [ 3, 5 ], [ 4, 5 ], [ 5, 6 ], [ 5, 7 ],
-						[ 6, 7 ] ] ] ];
-
-var saveFile = localStorage.getItem("lazorsSave2");
-if (!saveFile) {
-	saveFile = "";
-	for (i = 0; i < levels.length; i++) {
-		saveFile += "0";
-	}
-	localStorage.setItem("lazorsSave2", saveFile);
-}
-
-var levelNum = 1;
-if (window.location.hash) {
-	levelNum = parseInt(window.location.hash.replace("#", ""));
-	if (!levelNum) {
-		levelNum = 1;
-	}
-}
-var level = levels[levelNum - 1];
-
-var field;
-var collisions = [ [ 0, 0, 0, 0 ], [ false, false, false, false, false ] ];
-var selectedCircle;
-
-var s;
-
-function setCharAt(str, index, chr) {
-	if (index > str.length - 1)
-		return str;
-	return str.substr(0, index) + chr + str.substr(index + 1);
-}
-function init() {
-	var buttonEvent = function(e) {
+var buttonEvent = function(e) {
 		if (e.keyName == "back") {
 			$("#myModal").modal();
 		}
 	}
 
-	document.addEventListener('tizenhwkey', buttonEvent);
-
-	/* create menu */
-	menu = document.getElementById("menu");
-	menuItems = [];
-	menuHeader = document.createElement("h3");
-	menuHeader.textContent = "Select Level";
-	menu.appendChild(menuHeader);
-	for (i = 0; i < levels.length; i++) {
-		menuItem = document.createElement("div");
-		menuItem.unlocked = false;
-		if (saveFile.charAt(i) == "1") {
-			menuItem.style.backgroundColor = "rgba(73,255,63,0.35)";
-			menuItem.unlocked = true;
-		} else if ((saveFile.charAt(i + 1) == "1")
-				|| (saveFile.charAt(i - 1) == "1") || i == 0) {
-			menuItem.style.backgroundColor = "rgba(180,180,180,0.5)";
-			menuItem.unlocked = true;
-		}
-		menuItem.innerHTML += (i + 1);
-		menuItem.mID = i;
-		menuItem.onmouseup = function() {
-			if (this.unlocked) {
-				hideMenu();
-				levelNum = this.mID + 1;
-				startLevel();
-			}
-		};
-		menuItems.push(menuItem);
-		menu.appendChild(menuItem);
-	}
-	/* menu created */
-
-	cursorX = 0;
-	cursorY = 0;
-	if (!canvas) {
-		canvas = document.createElement("canvas");
-		context = canvas.getContext("2d");
-		canvas.width = gameW;
-		canvas.height = gameH;
-		document.body.appendChild(canvas);
-	} else {
-		context.clearRect(0, 0, gameW, gameH);
-	}
-	if (checkForTouch()) {
-		document.body.addEventListener('touchmove', touchMove, false);
-		document.body.addEventListener('touchstart', touchStart, false);
-		document.body.addEventListener('touchend', touchEnd, false);
-	}
-	scroller = {};
-	scroller.i = 3;
-	scroller.timer = setInterval(autoScroll, 100);
-
-	field = level[0];
-
-	if (window.location.hash) {
-		hideMenu();
-		startLevel();
-	} else {
-		showMenu();
-	}
-	collisionMagic();
-	draw();
-}
-function moveCircle() {
-	field[selectedCircle][0] = cursorX;
-	field[selectedCircle][1] = cursorY;
-	draw();
-}
-function selectCircle() {
-	level = levels[levelNum - 1];
-	selectedCircle = undefined;
-	var x;
-	var y;
-	var xdis;
-	var ydis;
-	var dis;
-	var minDis = 100 * 100;
-	for (var i = 0; i < field.length; i++) {
-		x = field[i][0];
-		y = field[i][1];
-		xdis = x - cursorX;
-		ydis = y - cursorY;
-		dis = xdis * xdis + ydis * ydis;
-		if (dis < minDis) {
-			minDis = dis;
-			selectedCircle = i;
-		}
-	}
-}
-function startLevel() {
-	window.scrollTo(0, 1);
-	level = levels[levelNum - 1];
-	field = [];
-	for (i = 0; i < level[0].length; i++) {
-		field.push([ level[0][i][0], level[0][i][1] ]);
-	}
-	collisionMagic();
-	draw();
-	selectedCircle = undefined;
-	window.location.hash = levelNum;
-}
-function showMenu() {
-	window.location.hash = "";
-	menu.style.display = "block";
-	document.getElementById("menuBtn").style.display = "none";
-	canvas.style.display = "none";
-}
-function hideMenu() {
-	menu.style.display = "none";
-	document.getElementById("menuBtn").style.display = "inline";
-	canvas.style.display = "inline-block";
-}
-function winLevel() {
-	saveFile = setCharAt(saveFile, levelNum - 1, "1");
-	localStorage.setItem("lazorsSave2", saveFile);
-	for (i = 0; i < levels.length; i++) {
-		menuItem = menuItems[i];
-		if (saveFile.charAt(i) == "1") {
-			menuItem.style.backgroundColor = "rgba(73,255,63,0.35)";
-		} else if ((saveFile.charAt(i + 1) == "1")
-				|| (saveFile.charAt(i - 1) == "1") || i == 0) {
-			menuItem.style.backgroundColor = "rgba(180,180,180,0.5)";
-			menuItem.unlocked = true;
-		}
-	}
-	var nowYouWait = setTimeout(showMenu, 750);
-}
-function collisionMagic() {
-	collisions = [ [], [] ];
-	for (i = 0; i < field.length; i++) {
-		collisions[0].push(0);
-	}
-	for (i = 0; i < level[1].length; i++) {
-		collisions[1].push(0);
-	}
-	B = false;
-	for (var i = 0; i < level[1].length; i++) {
-		for (var j = i; j < level[1].length; j++) {
-			if (i !== j) {
-				var b = checkCollision(level[1][i], level[1][j]);
-				if (b) {
-					B = true;
-					collisions[0][level[1][i][0]] += b;
-					collisions[0][level[1][j][0]] += b;
-					collisions[0][level[1][i][1]] += b;
-					collisions[0][level[1][j][1]] += b;
-					collisions[1][i] += b;
-					collisions[1][j] += b;
-				}
-			}
-		}
-	}
-	if (!B) {
-		winLevel();
-	}
-}
-function checkCollision(L1, L2) {
-	var v1 = {
-		p0 : {
-			x : field[L1[0]][0],
-			y : field[L1[0]][1]
-		},
-		p1 : {
-			x : field[L1[1]][0],
-			y : field[L1[1]][1]
-		},
-	};
-	v1.vx = v1.p0.x - v1.p1.x;
-	v1.vy = v1.p0.y - v1.p1.y;
-	var v2 = {
-		p0 : {
-			x : field[L2[0]][0],
-			y : field[L2[0]][1]
-		},
-		p1 : {
-			x : field[L2[1]][0],
-			y : field[L2[1]][1]
-		}
-	};
-	v2.vx = v2.p0.x - v2.p1.x;
-	v2.vy = v2.p0.y - v2.p1.y;
-
-	var tV1 = {
-		vx : v1.p0.x - v2.p0.x,
-		vy : v1.p0.y - v2.p0.y
-	};
-	var tV2 = {
-		vx : v2.p0.x - v1.p0.x,
-		vy : v2.p0.y - v1.p0.y
-	}
-	var t1 = perP(tV1, v1) / perP(v2, v1);
-	var t2 = perP(tV2, v2) / perP(v1, v2);
-
-	return (t1 > -1 && t1 < 0 && t2 > -1 && t2 < 0);
-}
-function perP(va, vb) {
-	return va.vx * vb.vy - va.vy * vb.vx;
-}
-function clear() {
-	context.clearRect(0, 0, gameW, gameH);
-}
-function draw() {
-	clear();
-	var x;
-	var y;
-	var c0;
-	var c1;
-	/* draw lines */
-	context.lineWidth = 2;
-	for (var i = 0; i < level[1].length; i++) {
-		c0 = field[level[1][i][0]];
-		c1 = field[level[1][i][1]];
-		if (collisions[1][i] > 1) {
-			context.strokeStyle = "rgb(185,24,14)";
-		} else if (collisions[1][i] == 1) {
-			context.strokeStyle = "rgb(235,170,34)";
-		} else {
-			context.strokeStyle = "rgb(7,195,13)";
-		}
-		context.beginPath();
-		context.moveTo(c0[0], c0[1]);
-		context.lineTo(c1[0], c1[1]);
-		context.closePath();
-		context.stroke();
-	}
-
-	/* draw circles */
-	for (var i = 0; i < field.length; i++) {
-		x = field[i][0];
-		y = field[i][1];
-		context.fillStyle = "rgb(100,100,100)";
-		drawCirclePath(17, x, y);
-		context.fill();
-		if (collisions[0][i] > 1) {
-			context.fillStyle = "rgb(185,24,14)";
-		} else if (collisions[0][i] == 1) {
-			context.fillStyle = "rgb(235,170,34)";
-		} else {
-			context.fillStyle = "rgb(7,195,13)";
-		}
-		drawCirclePath(8, x, y);
-		context.fill();
-	}
-}
-function drawCirclePath(R, X, Y) {
-	context.beginPath();
-	context.arc(X, Y, R, 0, Math.PI * 2, true);
-	context.closePath();
-}
-
-function checkForTouch() {
-	detective = document.createElement("div");
-	detective.setAttribute("ontouchmove", "return;");
-	return typeof detective.ontouchmove == "function" ? true : false;
-}
-function updateCursorPos(touch) {
-	cursorX = touch.pageX - canvas.offsetLeft;
-	cursorY = touch.pageY - canvas.offsetTop;
-	if (cursorX > gameW) {
-		cursorX = gameW;
-	} else if (cursorX < 0) {
-		cursorX = 0;
-	}
-	if (cursorY > gameH) {
-		cursorY = gameH;
-	} else if (cursorY < 0) {
-		cursorY = 0;
-	}
-}
-function touchStart(event) {
-	if ($('#myModal').hasClass('in')) {
-		return;
-	} else {
-		updateCursorPos(event.touches[0]);
-		selectCircle();
-		moveCircle();
-		if (menu.style.display == "none") {
-			window.scrollTo(0, 1);
-			if (cursorY > 40 || cursorX < 230) {
-				event.preventDefault();
-			}
-		}
-	}
-}
-function touchMove(event) {
-	if ($('#myModal').hasClass('in')) {
-		return;
-	} else {
-		updateCursorPos(event.touches[0]);
-		moveCircle();
-	}
-}
-function touchEnd(event) {
-	if (menu.style.display !== "block") {
-		selectedCircle = undefined;
-		collisionMagic();
-		draw();
-	}
-}
-function mouseDown(event) {
-	if ($('#myModal').hasClass('in')) {
-		return;
-	} else {
-		updateCursorPos(event);
-		selectCircle();
-		moveCircle();
-	}
-}
-function mouseUp(event) {
-	selectedCircle = undefined;
-	collisionMagic();
-	draw();
-}
-function mouseMove(event) {
-	if ($('#myModal').hasClass('in')) {
-		return;
-	} else {
-		updateCursorPos(event);
-		moveCircle();
-	}
-}
-function keyDown() {
-	s = "[";
-	for (i = 0; i < level[0].length; i++) {
-		s += "[";
-		for (j = 0; j < level[0][i].length; j++) {
-			s += level[0][i][j];
-			if (j < level[0][i].length - 1) {
-				s += ",";
-			}
-		}
-		s += "]";
-		if (i < level[0].length - 1) {
-			s += ",";
-		}
-	}
-	s += "],\n["
-	for (i = 0; i < level[1].length; i++) {
-		s += "[";
-		for (j = 0; j < level[1][i].length; j++) {
-			s += level[1][i][j];
-			if (j < level[1][i].length - 1) {
-				s += ",";
-			}
-		}
-		s += "]";
-		if (i < level[1].length - 1) {
-			s += ",";
-		}
-	}
-	s += "]";
-	alert(s);
-}
-function orentationChanged() {
-	if (window.innerHeight < window.innerWidth) {
-		alert("Please rotate your device to portrait mode.");
-		orentationChanged();
-	}
-}
-function autoScroll() {
-	window.scrollTo(0, 1);
-	scroller.i--;
-	if (scroller.i < 0) {
-		clearInterval(scroller.timer);
-		scroller.timer = null;
-	}
-}
+document.addEventListener('tizenhwkey', buttonEvent);
 
 function goApps() {
 	var service = new tizen.ApplicationControl(
@@ -596,3 +26,596 @@ function goApps() {
 function exit() {
 	tizen.application.getCurrentApplication().exit();
 }
+
+
+function gObj(obj) {
+	var theObj;
+	if (document.all) {
+		if (typeof obj == "string") {
+			return document.all(obj);
+		} else {
+			return obj.style;
+		}
+	}
+	if (document.getElementById) {
+		if (typeof obj == "string") {
+			return document.getElementById(obj);
+		} else {
+			return obj.style;
+		}
+	}
+	return null;
+}
+function trimAll(sString) {
+	while (sString.substring(0, 1) == ' ') {
+		sString = sString.substring(1, sString.length);
+	}
+	while (sString.substring(sString.length - 1, sString.length) == ' ') {
+		sString = sString.substring(0, sString.length - 1);
+	}
+	return sString;
+}
+
+function r(A) {
+	if (A == "10x" || A == "log" || A == "ex" || A == "ln" || A == "sin"
+			|| A == "asin" || A == "cos" || A == "acos" || A == "tan"
+			|| A == "atan" || A == "e" || A == "pi" || A == "n!" || A == "x2"
+			|| A == "1/x" || A == "swap" || A == "x3" || A == "3x"
+			|| A == "RND" || A == "M-" || A == "qc" || A == "MC" || A == "MR"
+			|| A == "MS" || A == "M+" || A == "sqrt" || A == "pc") {
+		func(A)
+	} else {
+		if (A == 1 || A == 2 || A == 3 || A == 4 || A == 5 || A == 6 || A == 7
+				|| A == 8 || A == 9 || A == 0) {
+			numInput(A)
+		} else {
+			if (A == "pow" || A == "apow" || A == "+" || A == "-" || A == "*"
+					|| A == "/") {
+				opt(A)
+			} else {
+				if (A == "(") {
+					popen()
+				} else {
+					if (A == ")") {
+						pclose()
+					} else {
+						if (A == "EXP") {
+							exp()
+						} else {
+							if (A == ".") {
+								if (entered) {
+									value = 0;
+									digits = 1
+								}
+								entered = false;
+								if ((decimal == 0) && (value == 0)
+										&& (digits == 0)) {
+									digits = 1
+								}
+								if (decimal == 0) {
+									decimal = 1
+								}
+								refresh()
+							} else {
+								if (A == "+/-") {
+									if (exponent) {
+										Hj = -Hj
+									} else {
+										value = -value
+									}
+									refresh()
+								} else {
+									if (A == "C") {
+										level = 0;
+										exponent = false;
+										value = 0;
+										enter();
+										refresh()
+									} else {
+										if (A == "=") {
+											enter();
+											while (level > 0) {
+												evalx()
+											}
+											refresh()
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+var totalDigits = 12;
+var pareSize = 12;
+var degreeRadians = "degree";
+var value = 0;
+var memory = 0;
+var level = 0;
+var entered = true;
+var decimal = 0;
+var fixed = 0;
+var exponent = false;
+var digits = 0;
+var showValue = "0";
+var isShowValue = true;
+function stackItem() {
+	this.value = 0;
+	this.op = ""
+}
+function array(A) {
+	this[0] = 0;
+	for (i = 0; i < A; ++i) {
+		this[i] = 0;
+		this[i] = new stackItem()
+	}
+	this.gG = A
+}
+uI = new array(pareSize);
+function push(B, C, A) {
+	if (level == pareSize) {
+		return false
+	}
+	for (i = level; i > 0; --i) {
+		uI[i].value = uI[i - 1].value;
+		uI[i].op = uI[i - 1].op;
+		uI[i].vg = uI[i - 1].vg
+	}
+	uI[0].value = B;
+	uI[0].op = C;
+	uI[0].vg = A;
+	++level;
+	return true
+}
+function pop() {
+	if (level == 0) {
+		return false
+	}
+	for (i = 0; i < level; ++i) {
+		uI[i].value = uI[i + 1].value;
+		uI[i].op = uI[i + 1].op;
+		uI[i].vg = uI[i + 1].vg
+	}
+	--level;
+	return true
+}
+function format(I) {
+	if (typeof (cc) != "undefined") {
+		return
+	}
+	;
+	var E = "" + I;
+	if (E.indexOf("N") >= 0 || (I == 2 * I && I == 1 + I)) {
+		return "Error "
+	}
+	var G = E.indexOf("e");
+	if (G >= 0) {
+		var A = E.substring(G + 1, E.length);
+		if (G > 11) {
+			G = 11
+		}
+		E = E.substring(0, G);
+		if (E.indexOf(".") < 0) {
+			E += "."
+		} else {
+			j = E.length - 1;
+			while (j >= 0 && E.charAt(j) == "0") {
+				--j
+			}
+			E = E.substring(0, j + 1)
+		}
+		E += " " + A
+	} else {
+		var J = false;
+		if (I < 0) {
+			I = -I;
+			J = true
+		}
+		var C = Math.floor(I);
+		var K = I - C;
+		var D = totalDigits - ("" + C).length - 1;
+		if (!entered && fixed > 0) {
+			D = fixed
+		}
+		var F = " 1000000000000000000".substring(1, D + 2) + "";
+		if ((F == "") || (F == " ")) {
+			F = 1
+		} else {
+			F = parseInt(F)
+		}
+		var B = Math.floor(K * F + 0.5);
+		C = Math.floor(Math.floor(I * F + 0.5) / F);
+		if (J) {
+			E = "-" + C
+		} else {
+			E = "" + C
+		}
+		var H = "00000000000000" + B;
+		H = H.substring(H.length - D, H.length);
+		G = H.length - 1;
+		if (entered || fixed == 0) {
+			while (G >= 0 && H.charAt(G) == "0") {
+				--G
+			}
+			H = H.substring(0, G + 1)
+		}
+		if (G >= 0) {
+			E += "." + H
+		}
+	}
+	return E
+}
+function refresh() {
+	var A = format(value);
+	if (exponent) {
+		if (Hj < 0) {
+			A += " " + Hj
+		} else {
+			A += " +" + Hj
+		}
+	}
+	if (A.indexOf(".") < 0 && A != "Error ") {
+		if (entered || decimal > 0) {
+			A += "."
+		} else {
+			A += " "
+		}
+	}
+	if ("" == ("" + A)) {
+		document.getElementById("sciOutPut").innerHTML = " "
+	} else {
+		document.getElementById("sciOutPut").innerHTML = A
+	}
+}
+function evalx() {
+	if (level == 0) {
+		return false
+	}
+	op = uI[0].op;
+	Qk = uI[0].value;
+	if (op == "+") {
+		value = parseFloat(Qk) + value
+	} else {
+		if (op == "-") {
+			value = Qk - value
+		} else {
+			if (op == "*") {
+				value = Qk * value
+			} else {
+				if (op == "/") {
+					value = Qk / value
+				} else {
+					if (op == "pow") {
+						value = Math.pow(Qk, value)
+					} else {
+						if (op == "apow") {
+							value = Math.pow(Qk, 1 / value)
+						}
+					}
+				}
+			}
+		}
+	}
+	pop();
+	if (op == "(") {
+		return false
+	}
+	return true
+}
+function popen() {
+	enter();
+	if (!push(0, "(", 0)) {
+		value = "NAN"
+	}
+	refresh()
+}
+function pclose() {
+	enter();
+	while (evalx()) {
+	}
+	refresh()
+}
+function opt(A) {
+	enter();
+	if (A == "+" || A == "-") {
+		vg = 1
+	} else {
+		if (A == "*" || A == "/") {
+			vg = 2
+		} else {
+			if (A == "pow" || A == "apow") {
+				vg = 3
+			}
+		}
+	}
+	if (level > 0 && vg <= uI[0].vg) {
+		evalx()
+	}
+	if (!push(value, A, vg)) {
+		value = "NAN"
+	}
+	refresh()
+}
+function enter() {
+	if (exponent) {
+		value = value * Math.exp(Hj * Math.LN10)
+	}
+	entered = true;
+	exponent = false;
+	decimal = 0;
+	fixed = 0
+}
+function numInput(A) {
+	if (entered) {
+		value = 0;
+		digits = 0;
+		entered = false
+	}
+	if (A == 0 && digits == 0) {
+		refresh();
+		return
+	}
+	if (exponent) {
+		if (Hj < 0) {
+			A = -A
+		}
+		if (digits < 3) {
+			Hj = Hj * 10 + A;
+			++digits;
+			refresh()
+		}
+		return
+	}
+	if (value < 0) {
+		A = -A
+	}
+	if (digits < totalDigits - 1) {
+		++digits;
+		if (decimal > 0) {
+			decimal = decimal * 10;
+			value = value + (A / decimal);
+			++fixed
+		} else {
+			value = value * 10 + A
+		}
+	}
+	refresh()
+}
+function exp() {
+	if (entered || exponent) {
+		return
+	}
+	exponent = true;
+	Hj = 0;
+	digits = 0;
+	decimal = 0;
+	refresh()
+}
+function func(D) {
+	enter();
+	if (D == "1/x") {
+		value = 1 / value
+	}
+	if (D == "pc") {
+		value = value / 100
+	}
+	if (D == "qc") {
+		value = value / 1000
+	} else {
+		if (D == "swap") {
+			var B = value;
+			value = uI[0].value;
+			uI[0].value = B
+		} else {
+			if (D == "n!") {
+				if (value < 0 || value > 200 || value != Math.round(value)) {
+					value = "NAN"
+				} else {
+					var E = 1;
+					var A;
+					for (A = 1; A <= value; ++A) {
+						E *= A
+					}
+					value = E
+				}
+			} else {
+				if (D == "MR") {
+					value = memory
+				} else {
+					if (D == "M+") {
+						memory += value
+					} else {
+						if (D == "MS") {
+							memory = value
+						} else {
+							if (D == "MC") {
+								memory = 0
+							} else {
+								if (D == "M-") {
+									memory -= value
+								} else {
+									if (D == "asin") {
+										if (degreeRadians == "degree") {
+											value = Math.asin(value) * 180
+													/ Math.PI
+										} else {
+											value = Math.asin(value)
+										}
+									} else {
+										if (D == "acos") {
+											if (degreeRadians == "degree") {
+												value = Math.acos(value) * 180
+														/ Math.PI
+											} else {
+												value = Math.acos(value)
+											}
+										} else {
+											if (D == "atan") {
+												if (degreeRadians == "degree") {
+													value = Math.atan(value)
+															* 180 / Math.PI
+												} else {
+													value = Math.atan(value)
+												}
+											} else {
+												if (D == "e^x") {
+													value = Math.exp(value
+															* Math.LN10)
+												} else {
+													if (D == "2^x") {
+														value = Math.exp(value
+																* Math.LN2)
+													} else {
+														if (D == "e^x") {
+															value = Math
+																	.exp(value)
+														} else {
+															if (D == "x^2") {
+																value = value
+																		* value
+															} else {
+																if (D == "e") {
+																	value = Math.E
+																} else {
+																	if (D == "ex") {
+																		value = Math
+																				.pow(
+																						Math.E,
+																						value)
+																	} else {
+																		if (D == "10x") {
+																			value = Math
+																					.pow(
+																							10,
+																							value)
+																		} else {
+																			if (D == "x3") {
+																				value = value
+																						* value
+																						* value
+																			} else {
+																				if (D == "3x") {
+																					value = Math
+																							.pow(
+																									value,
+																									1 / 3)
+																				} else {
+																					if (D == "x2") {
+																						value = value
+																								* value
+																					} else {
+																						if (D == "sin") {
+																							if (degreeRadians == "degree") {
+																								value = Math
+																										.sin(value
+																												/ 180
+																												* Math.PI)
+																							} else {
+																								value = Math
+																										.sin(value)
+																							}
+																						} else {
+																							if (D == "cos") {
+																								if (degreeRadians == "degree") {
+																									var C = (value % 360);
+																									if (C < 0) {
+																										C = C + 360
+																									}
+																									if (C == 90) {
+																										value = 0
+																									} else {
+																										if (C == 270) {
+																											value = 0
+																										} else {
+																											value = Math
+																													.cos(value
+																															/ 180
+																															* Math.PI)
+																										}
+																									}
+																								} else {
+																									var C = (value * 180 / Math.PI) % 360;
+																									if (C < 0) {
+																										C = C + 360
+																									}
+																									if ((Math
+																											.abs(C - 90) < 1e-10)
+																											|| (Math
+																													.abs(C - 270) < 1e-10)) {
+																										value = 0
+																									} else {
+																										value = Math
+																												.cos(value)
+																									}
+																								}
+																							} else {
+																								if (D == "tan") {
+																									if (degreeRadians == "degree") {
+																										value = Math
+																												.tan(value
+																														/ 180
+																														* Math.PI)
+																									} else {
+																										value = Math
+																												.tan(value)
+																									}
+																								} else {
+																									if (D == "log") {
+																										value = Math
+																												.log(value)
+																												/ Math.LN10
+																									} else {
+																										if (D == "log2") {
+																											value = Math
+																													.log(value)
+																													/ Math.LN2
+																										} else {
+																											if (D == "ln") {
+																												value = Math
+																														.log(value)
+																											} else {
+																												if (D == "sqrt") {
+																													value = Math
+																															.sqrt(value)
+																												} else {
+																													if (D == "pi") {
+																														value = Math.PI
+																													} else {
+																														if (D == "RND") {
+																															value = Math
+																																	.random()
+																														}
+																													}
+																												}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	refresh()
+};
